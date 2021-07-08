@@ -7,8 +7,15 @@ import java.util.List;
 public class Training {
     private String name;
     private List<ModuleTraining> moduleTrainingList;
+    private  Levels levels;
 
     public Training() {
+    }
+
+    public Training(String name, List<ModuleTraining> moduleTrainingList, Levels levels) {
+        this.name = name;
+        this.moduleTrainingList = moduleTrainingList;
+        this.levels = levels;
     }
 
     public String getName() {
@@ -27,6 +34,14 @@ public class Training {
         this.moduleTrainingList = moduleTrainingList;
     }
 
+    public Levels getLevels() {
+        return levels;
+    }
+
+    public void setLevels(Levels levels) {
+        this.levels = levels;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -35,13 +50,16 @@ public class Training {
         Training training = (Training) o;
 
         if (name != null ? !name.equals(training.name) : training.name != null) return false;
-        return moduleTrainingList != null ? moduleTrainingList.equals(training.moduleTrainingList) : training.moduleTrainingList == null;
+        if (moduleTrainingList != null ? !moduleTrainingList.equals(training.moduleTrainingList) : training.moduleTrainingList != null)
+            return false;
+        return levels == training.levels;
     }
 
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (moduleTrainingList != null ? moduleTrainingList.hashCode() : 0);
+        result = 31 * result + (levels != null ? levels.hashCode() : 0);
         return result;
     }
 
@@ -50,6 +68,7 @@ public class Training {
         return "Training{" +
                 "name='" + name + '\'' +
                 ", moduleTrainingList=" + moduleTrainingList +
+                ", levels=" + levels +
                 '}';
     }
 }

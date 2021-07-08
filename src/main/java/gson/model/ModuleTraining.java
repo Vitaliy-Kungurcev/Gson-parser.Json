@@ -1,11 +1,14 @@
 package gson.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.time.LocalDate;
 
 public class ModuleTraining {
     private Integer id;
     private String title;
     private String description;
+    @SerializedName("date")
     private LocalDate publishDate;
 
 

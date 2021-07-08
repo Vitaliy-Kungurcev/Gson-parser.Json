@@ -2,29 +2,36 @@ package gson;
 
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import gson.model.Training;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 
 public class GsonParser {
+    private final Gson gson = new GsonBuilder()
+            .setPrettyPrinting()
+            .create();
 
     public Training readFromJson(String fileName) throws IOException {
-        Gson gson = new Gson();
+
+        Training training = new Training();
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(fileName);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        Training training = gson.fromJson(reader, Training.class);
-        reader.close();
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            training = gson.fromJson(reader, Training.class);
+        }
+
         return training;
     }
 
 
     public String writingToJson(Training training) throws IOException {
-        Gson gson = new Gson();
-        return gson.toJson(training);
+        String stringJson = gson.toJson(training);
+        try (FileWriter fileWriter = new FileWriter("src/main/resources/writingToJson.json")) {
+            fileWriter.write(stringJson);
+        }
+        return stringJson;
     }
 }
 
