@@ -1,12 +1,15 @@
 package gson.model;
 
 
+import com.google.gson.annotations.JsonAdapter;
+
 import java.util.List;
 
 
 public class Training {
     private String name;
     private List<ModuleTraining> moduleTrainingList;
+    @JsonAdapter(EnumAdapter.class)
     private  Levels levels;
 
     public Training() {
